@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Plaintes</title>
+    <link href="plaintes.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <header>
+      <img src="img/PoutinoBanner.png" alt="My Banner">
+    </header>
+    <main>
+      <div id = "sidebar">
+        <ul id = "navigation">
+          <li><a href = "acceuil.html">Acceuil</a></li>
+          <li><a href = "histoire.html">Histoire</a></li>
+          <li><a href = "menu.html">Menu</a></li>
+          <li><a href = "plaintes.html">Plainte</a></li>
+          <li><a href = "prendre-rendez-vous.html">Rendez-vous</a></li>
+        </ul>
+      </div>
+      <div id="description">
+        <h1>Plaintes</h1>
+        <p>Il n'y a généralement aucune raison de déposer une plainte chez Chez Poutino, 
+          mais si jamais vous rencontrez un problème ou une insatisfaction lors de votre visite, 
+          vous pouvez le signaler immédiatement au personnel de service pour qu'ils puissent résoudre 
+          rapidement la situation. Chez Poutino s'engage à fournir un service de qualité supérieure à 
+          ses clients et prendra toutes les mesures nécessaires pour répondre à vos préoccupations. 
+          Dans le cas peu probable où vous ne seriez pas satisfait de la résolution proposée, 
+          vous pouvez remplir le formulaire ci-dessous pour signaler votre plainte 
+          et notre équipe travaillera avec vous pour trouver une solution satisfaisante.</p>       
+      </div>
+      <div id="form">
+        <form>
+          <fieldset>
+            <legend>Plainte</legend>
+            <label for="name">Nom:</label>
+            <input type="text" id="name" name="name"><br>
+            <label for="date">Date de l'incident:</label>
+            <input type="date" id="date" name="date"><br>
+            <label for="plainte">Type de plainte:</label>
+            <select id="plainte">
+              <option value="service">Service</option>
+              <option value="nourriture">Nourriture</option>
+              <option value="clients">Clients</option>
+              <option value="autre">Autre</option>
+            </select><br>
+            <label for="details">Détails:</label>
+            <textarea id="details" cols="60" rows="6"></textarea><br>
+            <p>Si votre plainte est résolue, pensez-vous revenir Chez Poutino?</p>
+            <input type="radio" id="oui" name="choice" value="oui">
+            <label for="red">Oui</label>
+            <input type="radio" id="non" name="choice" value="non">
+            <label for="blue">Non</label><br>
+            <input type="submit" value="Envoyer">
+          </fieldset>  
+        </form>
+      </div>
+    </main>
+  </body>
+</html>
