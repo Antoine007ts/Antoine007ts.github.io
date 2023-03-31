@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset = "utf-8">
+    <title>Soumission</title>
+    <link href = "form.css" rel = "stylesheet" type = "text/css">
+    <script>
+        function checkInput(inputid, min, max){
+            let valid = true;
+            let elem = document.getElementById(inputid);
+            let value = parseInt(elem.value);
+
+            if(isNaN(value)){
+                valid = false;
+            } 
+
+            if(value < min || value > max){
+                valid = false;
+            }
+
+            if(valid === false){
+                document.getElementById(inputid+"_error").innerHTML = "Erreur de formatage, le valeur doit être un entier entre "+min+" et "+max;
+            }else{
+                document.getElementById(inputid+"_error").innerHTML = "";
+            }
+
+            return valid;
+        }
+
+        function checkResult(){
+            document.getElementById('result').innerHTML = "";
+            document.getElementById('result').style.color = 'black';
+            var inputs = document.querySelectorAll('input[type=text]');
+            
+
+            for(i = 0; i < inputs.length; i++){
+                let input = inputs[i];
+                if(input.value === "" || document.getElementById(input.id+"_error").innerHTML != ""){
+                    document.getElementById('result').innerHTML = "Champs incomplet(s), veuillez remplir tous les champs.";
+                    document.getElementById('result').style.color = 'red';
+                    return;
+                }
+            }
+
+            let assured = true;
+
+            let genre = document.getElementById('genre');
+            let age = parseInt(document.getElementById('age').value);
+            let achat = parseInt(document.getElementById('achat').value);
+            let annee = parseInt(document.getElementById('annee').value);
+            let nbrec = parseInt(document.getElementById('reclamations').value);
+
+            if(genre.value != "femme" && age < 18) assured = false;
+            if(genre.value === "femme" && age < 16) assured = false;
+            if(age > 100) assured = false;
+            if(2023 - annee > 25) assured = false;
+            if(achat > 100000) assured = false;
+            let total = 0;
+            if(!isNaN(nbrec)){
+                if(nbrec > 4) assured = false; 
+                for(i = 1; i <= nbrec; i++){
+                    total += parseInt(document.getElementById("montant"+i).value);
+                }
+                if(total > 35000) assured = false;
+            }
+
+            if(!assured){
+                document.getElementById('result').innerHTML = "Désolé, nous n'avons aucun produit à offrir pour ce profil de client";
+                document.getElementById('result').style.color = 'red';
+            }else{
+                let soum = 0;
+                if(genre.value != "femme" && age < 25){
+                    soum = achat*0.05;
+                }else if(age > 75){
+                    soum = achat*0.04;
+                }else{
+                    soum = achat*0.02;
+                }
+
+                if(!isNaN(nbrec)){
+                    soum = soum + 350 * nbrec;
+                }
+
+                if(total > 25000){
+                    soum += 500;
+                }
+
+                document.getElementById('result').innerHTML = "Le montant de votre soumissions d'assurance est de "+soum+"$ par année ou "+Math.round(soum/12)+"$ par mois.";
+
+                let reset = document.createElement('input');
+                reset.type = 'submit';
+                reset.value = "Recommencer";
+                
+                reset.addEventListener('click', () =>{
+                    for(i = 0; i < inputs.length; i++){
+                        let input = inputs[i];
+                        input.value = "";
+                    }
+                    let div = document.getElementById('montants');
+
+                    while(div.firstChild){
+                        div.removeChild(div.firstChild);
+                    }
+                    document.getElementById('oui').checked = true;
+                    document.getElementById('non').checked = true;
+                    location.reload();
+                });
+
+                document.getElementById('form').appendChild(reset);
+            }
+            
+        }
+    </script>
+  </head>
+  <body>
+  <header>
+    <img src="img/title.png" alt="My Banner">
+  </header>
+  <main>
+    <div id="car1">
+        <img src="img/86.gif" class="car">
+        <h2>Meilleur prix!</h2>
+    </div>
+    <div id="car2">
+        <img src="img/fc.gif" class="car">
+        <h2>Facile à faire!</h2>
+    </div>
+    <div id="form">
+        <form method="post">
+            <label for="genre">Quel est votre genre? :</label>
+            <select id="genre">
+                <option value="homme">Homme</option>
+                <option value="femme">Femme</option>
+                <option value="non-binaire">Non-binaire</option>
+            </select>
+            <span id="age_error"></span>
+            <label for="age">Quel est votre âge? :</label>
+            <input type="text" id="age" name="age">
+            <span id="achat_error"></span>
+            <label for="achat">Quelle est la valeur d'achat de votre véhicule? :</label>
+            <input type="text" id="achat" name="achat">
+            <span id="annee_error"></span>
+            <label for="annee">Quelle est l'année de fabrication de votre véhicule? :</label>
+            <input type="text" id="annee" name="annee">
+            <div id="radio">
+                <p>Avez-vous fait des réclamations d'assurance auto dans les 6 dernières années? :</p>
+                <input type="radio" id="oui" name="choice" value="oui">
+                <label for="oui">Oui</label>
+                <input type="radio" id="non" name="choice" value="non" checked>
+                <label for="non">Non</label><br>
+            </div>
+            <div id="rec">
+                <span id="reclamations_error"></span>
+                <label for="reclamations">Combien de réclamations avez-vous faites? :</label>
+                <input type="text" id="reclamations" name="reclamations" value=" ">
+                <div id="montants">
+                </div>
+            </div>
+          <input type="submit" value="Verifier" id="ver">
+      </form>
+      <h2 id="result"></h2>
+    </div>
+    <script>
+        document.getElementById('age').addEventListener('change', () =>{
+                    checkInput('age', 0, 130);
+        });
+
+        document.getElementById('achat').addEventListener('change', () =>{
+                    checkInput('achat', 0, 999999);
+        });
+
+        document.getElementById('annee').addEventListener('change', () =>{
+                    checkInput('annee', 1880, 2023);
+        });
+        
+        document.getElementById('reclamations').addEventListener('change', () =>{
+                    checkInput('reclamations', 1, 30);
+        });
+        document.getElementById('oui').addEventListener('change', () => {
+            document.getElementById('rec').style.display = 'block';
+            document.getElementById('reclamations').value = "";
+        });
+
+        document.getElementById('non').addEventListener('change', () => {
+            document.getElementById('rec').style.display = 'none';
+            document.getElementById('reclamations').value = " ";
+        });
+
+        document.getElementById('reclamations').addEventListener('change', () =>{
+            let count = document.getElementById('reclamations').value;
+            count = parseInt(count);
+
+            let div = document.getElementById('montants');
+
+            while(div.firstChild){
+                div.removeChild(div.firstChild);
+            }
+
+            for(i = 1; i-1 < count; i++){
+                let input = document.createElement('input');
+                input.id = 'montant'+i;
+                input.type = 'text';
+                input.style.display = 'block';
+                
+                let label = document.createElement('label');
+                label.textContent = 'Pour la reclamation #'+i+', quel montant avez-vous réclamé? :';
+                label.style.display = 'block';
+                
+                let err = document.createElement('span');
+                err.style.color = 'red';
+                err.id = input.id + "_error";
+
+                input.addEventListener('change', () =>{
+                    checkInput(input.id, 0, 999999);
+                });
+
+                div.appendChild(err);
+                div.appendChild(label);
+                div.appendChild(input);
+            }
+        });
+
+        document.getElementById('ver').addEventListener('click', (e) =>{
+                e.preventDefault();
+                checkResult();
+        });
+
+    </script>
+  </main>
+  </body>
+</html>

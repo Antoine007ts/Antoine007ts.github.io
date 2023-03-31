@@ -1,0 +1,81 @@
+body {
+    background-color: darkgray;
+}
+
+header {
+    display: block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+#form{
+    background-color:rgb(117, 117, 117);
+    height: auto;
+    width: fit-content;
+    text-align: justify;
+    display: block;
+    margin: auto;
+    margin-top: 30px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: black;
+    padding: 10px;
+}
+
+#rec {
+    display: none;
+}
+
+span {
+    color: red;
+}
+form > *{
+    display: block;
+}
+
+#rec > *{
+    display: block;
+}
+
+input {
+    margin-bottom: 10px;
+}
+
+select {
+    margin-bottom: 10px;
+}
+
+#radio{
+    display: inline;
+}
+
+.car {
+    background-color: darkslategray;
+    border-radius: 50%;
+    border-width: 3px;
+    border-style: solid;
+    border-color: black;
+}
+
+#car1 {
+    margin-left: 200px;
+    float: left;
+    display: block;
+    text-align: center;
+    font-size: larger;
+}
+
+#car1 img{
+    transform: scaleX(-1);
+}
+
+
+#car2 {
+    margin-right: 200px;
+    float: right;
+    display: block;
+    text-align: center;
+    font-size: larger;
+}
+
